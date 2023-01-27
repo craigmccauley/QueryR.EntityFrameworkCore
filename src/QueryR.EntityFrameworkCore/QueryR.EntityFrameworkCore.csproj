@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		
+		<PackageId>QueryR.EntityFrameworkCore</PackageId>
+		<PackageVersion>0.0.1</PackageVersion>
+		<Authors>Craig McCauley</Authors>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageTags>IQueryable;Query;Queries;CraigMcCauley;QueryR;EntityFramework</PackageTags>
+		<Description>This library simplifies performing queries against EntityFrameworkCore DbSet objects.</Description>
+		<Copyright>Copyright (c) Craig McCauley 2023</Copyright>
+		<PackageProjectUrl>https://github.com/craigmccauley/QueryR.EntityFrameworkCore</PackageProjectUrl>
+		<PackageIcon>logo.png</PackageIcon>
+		<RepositoryUrl>https://github.com/craigmccauley/QueryR.EntityFrameworkCore</RepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/craigmccauley/QueryR.EntityFrameworkCore.gitt</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>IQueryable;Query;Queries;CraigMcCauley;QueryR;adhoc;ad-hoc</PackageTags>
+		<PackageReleaseNotes>Initial release of QueryR.EntityFrameworkCore</PackageReleaseNotes>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="QueryR.EntityFrameworkCore.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
+	  <PackageReference Include="QueryR" Version="0.0.3" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="..\..\assets\logo.png" Pack="true" PackagePath="" />
+		<None Include="..\..\README.md" Pack="true" PackagePath="" />
+		<None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+	</ItemGroup>
+	
+</Project>

@@ -1,0 +1,1 @@
+GET https://localhost:7066/api/kerbals?fields[Kerbal]=Id,FirstName,LastName,AssignedSpaceCraft,SnacksOnHand,PlanetaryBodiesVisited&fields[PlanetaryBody]=Name&Fields[KerbalPlanetaryBody]=PlanetaryBody&fields[Snack]=SnackType,Amount&fields[SnackType]=Name&include=SnacksOnHand.SnackType,PlanetaryBodiesVisited.PlanetaryBody

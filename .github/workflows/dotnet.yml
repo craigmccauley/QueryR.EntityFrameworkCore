@@ -1,0 +1,43 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore ./src
+    - name: Build
+      run: dotnet build ./src --no-restore --configuration Release
+    - name: Test
+      run: dotnet test ./src/QueryR.EntityFrameworkCore.Tests --verbosity quiet --nologo --configuration Release --collect:"XPlat Code Coverage" --results-directory coverage
+    - name: Copy Coverage to Predictable Location
+      run: cp coverage/*/coverage.cobertura.xml coverage/coverage.cobertura.xml
+    - name: Setup .NET Core # Required to execute ReportGenerator
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.x
+        dotnet-quality: 'ga'
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.1.13
+      with:
+        reports: coverage/coverage.cobertura.xml
+        targetdir: coveragereport
+        reporttypes: MarkdownSummaryGithub
+    - name: Adding markdown summary
+      run: cat coveragereport/SummaryGithub.md > $GITHUB_STEP_SUMMARY
