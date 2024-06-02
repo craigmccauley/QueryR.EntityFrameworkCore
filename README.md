@@ -19,46 +19,49 @@ QueryR.EntityFrameworkCore would not be complete without new QueryResult extensi
 ## Web Api Example
 
 ```CSharp
-public class KerbalsGet : BaseController
+public class GetAll(IGetAllKerbalsService getAllKerbalsService) : ControllerBase
 {
     [HttpGet(Routes.Api.Kerbals.Url)]
-    public async Task<IActionResult> Action(Command command) => await Mediator.Send(command);
-    public class Command : IRequest<IActionResult>
-    {
-        [FromQuery(Name = "")]
-        public QueryParameters QueryParameters { get; set; } = new();
-    }
-    public class ResponseObject
+    public async Task<IActionResult> Action(
+        [FromQuery(Name = "")] QueryParameters parameters) =>
+            Ok(await getAllKerbalsService.GetAllAsync(parameters));
+
+    public class ListWithTotalCount<T>
     {
         public int TotalCount { get; set; }
-        public List<Kerbal> Kerbals { get; set; }
+        public List<T> Items { get; set; } = new();
     }
-    public class Handler : IRequestHandler<Command, IActionResult>
+    public interface IGetAllKerbalsService
     {
-        public readonly IQueryParameterMapper queryParameterMapper;
-        public readonly KspDbContext kspDbContext;
-        public Handler(
-            IQueryParameterMapper queryParameterMapper,
-            KspDbContext kspDbContext
-        )
-        {
-            this.queryParameterMapper = queryParameterMapper;
-            this.kspDbContext = kspDbContext;
-        }
+        Task<ListWithTotalCount<Kerbal>> GetAllAsync(QueryParameters parameters, CancellationToken cancellationToken = default);
+    }
+    public class GetAllKerbalsService(
+        IQueryParametersMapper queryParametersMapper,
+        KerbalDbContext kerbalDbContext
+        ) : IGetAllKerbalsService
+    {
+        public readonly IQueryParametersMapper queryParametersMapper = queryParametersMapper;
+        public readonly KerbalDbContext kerbalDbContext = kerbalDbContext;
 
-        public async Task<IActionResult> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<ListWithTotalCount<Kerbal>> GetAllAsync(QueryParameters parameters, CancellationToken cancellationToken = default)
         {
-            var query = queryParameterMapper.MapToQuery(request.QueryParameters);
+            kerbalDbContext.Database.EnsureCreated();
 
-            var (totalCount, kerbals) = await kspDbContext.Set<Kerbal>().Query(query)
+            var query = queryParametersMapper.ToQuery(parameters);
+
+            var (totalCount, kerbals) = await kerbalDbContext.Set<Kerbal>().Query(query)
                 .GetCountAndListAsync(cancellationToken);
 
-            return new OkObjectResult(new ResponseObject {
+            //Normally you would use a DTO mapper here to prevent cyclic dependencies.
+            //The ExampleRequests.http file has a request that uses sparse fields to avoid this for the purposes of the demo.
+            return new ListWithTotalCount<Kerbal>
+            {
                 TotalCount = totalCount,
-                Kerbals = kerbals
-            });
+                Items = kerbals
+            };
         }
     }
 }
+
 ```
 
