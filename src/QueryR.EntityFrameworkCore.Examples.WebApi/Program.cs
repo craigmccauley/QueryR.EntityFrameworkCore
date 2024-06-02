@@ -1,8 +1,5 @@
 using Autofac;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
-using MediatR.Extensions.Autofac.DependencyInjection;
-using MediatR.Extensions.Autofac.DependencyInjection.Builder;
 using Microsoft.EntityFrameworkCore;
 using QueryR.EntityFrameworkCore.Examples.WebApi.Infrastructure.Database;
 using QueryR.EntityFrameworkCore.Examples.WebApi.Shared.Endpoints;
@@ -35,27 +32,16 @@ builder.Services.AddDbContext<KerbalDbContext>(options =>
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {
-    var configuration = MediatRConfigurationBuilder
-        .Create(typeof(Program).Assembly)
-        .WithAllOpenGenericHandlerTypesRegistered()
-        .Build();
-    builder.RegisterMediatR(configuration);
-
-    // Mediator property injection into BaseController base class.
-    var baseApiControllerType = typeof(BaseController);
-    foreach (var controllerType in AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
-        .Where(assemblyType => assemblyType != baseApiControllerType
-            && baseApiControllerType.IsAssignableFrom(assemblyType)))
-    {
-        builder.RegisterType(controllerType).PropertiesAutowired();
-    }
-
     builder.RegisterType<KerbalDbContext>()
         .AsImplementedInterfaces()
         .InstancePerLifetimeScope();
 
     //register other type below here
     builder.RegisterType<QueryParametersMapper>()
+        .AsImplementedInterfaces()
+        .SingleInstance();
+
+    builder.RegisterType<QueryR.EntityFrameworkCore.Examples.WebApi.Api.Kerbals.GetAll.GetAllKerbalsService>()
         .AsImplementedInterfaces()
         .SingleInstance();
 });

@@ -1,13 +1,8 @@
 ﻿using AutoFixture;
-using AutoFixture.AutoMoq;
+using AutoFixture.AutoNSubstitute;
 using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading;
-using Xunit;
 using Xunit.Sdk;
 
 namespace QueryR.EntityFrameworkCore.Tests.TestHelpers
@@ -23,7 +18,7 @@ namespace QueryR.EntityFrameworkCore.Tests.TestHelpers
         private readonly MemberDataAttribute memberDataAttribute;
 
         public MemberAutoDataAttribute(string memberName, params object[] parameters)
-          : this(memberName, parameters, () => new Fixture().Customize(new AutoMoqCustomization()))
+          : this(memberName, parameters, () => new Fixture().Customize(new AutoNSubstituteCustomization()))
         {
         }
 
