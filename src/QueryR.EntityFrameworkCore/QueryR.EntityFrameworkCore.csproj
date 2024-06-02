@@ -16,10 +16,10 @@
 		<PackageIcon>logo.png</PackageIcon>
 		<RepositoryUrl>https://github.com/craigmccauley/QueryR.EntityFrameworkCore</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<RepositoryUrl>https://github.com/craigmccauley/QueryR.EntityFrameworkCore.gitt</RepositoryUrl>
+		<RepositoryUrl>https://github.com/craigmccauley/QueryR.EntityFrameworkCore.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>IQueryable;Query;Queries;CraigMcCauley;QueryR;adhoc;ad-hoc</PackageTags>
-		<PackageReleaseNotes>Initial release of QueryR.EntityFrameworkCore</PackageReleaseNotes>
+		<PackageReleaseNotes>Removed hard entity framework core dependency and .net version dependency.</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
