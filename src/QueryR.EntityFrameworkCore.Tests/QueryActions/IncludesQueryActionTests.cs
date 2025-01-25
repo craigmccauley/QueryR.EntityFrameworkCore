@@ -18,7 +18,7 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             //assert
             foreach (var person in result)
             {
-                person.Pets.Should().BeNull();
+                person.Pets.ShouldBeNull();
             }
         }
 
@@ -44,10 +44,11 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             //assert
             foreach (var person in result)
             {
-                person.Pets.Should().NotBeNullOrEmpty();
+                person.Pets.ShouldNotBeNull();
+                person.Pets.ShouldNotBeEmpty();
                 foreach (var pet in person.Pets)
                 {
-                    pet.PetType.Should().BeNull();
+                    pet.PetType.ShouldBeNull();
                 }
             }
         }
@@ -74,11 +75,12 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             //assert
             foreach (var person in result)
             {
-                person.Pets.Should().NotBeNullOrEmpty();
+                person.Pets.ShouldNotBeNull();
+                person.Pets.ShouldNotBeEmpty();
                 foreach (var pet in person.Pets)
                 {
-                    pet.PetType.Should().NotBeNull();
-                    (pet.PetType?.Name).Should().NotBeNullOrWhiteSpace();
+                    pet.PetType.ShouldNotBeNull();
+                    (pet.PetType?.Name).ShouldNotBeNullOrWhiteSpace();
                 }
             }
         }

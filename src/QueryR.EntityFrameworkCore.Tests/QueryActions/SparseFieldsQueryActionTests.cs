@@ -33,10 +33,10 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             //assert
             foreach (var item in result)
             {
-                item.Name.Should().NotBe(default);
-                item.Age.Should().Be(default);
-                item.Id.Should().Be(default);
-                item.Pets.Should().BeNull();
+                item.Name.ShouldNotBe(default);
+                item.Age.ShouldBe(default);
+                item.Id.ShouldBe(default);
+                item.Pets.ShouldBeNull();
             }
         }
     }

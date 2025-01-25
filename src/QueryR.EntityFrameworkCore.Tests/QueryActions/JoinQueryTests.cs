@@ -10,7 +10,7 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
         public JoinQueryTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         [Fact]
-        internal async void Query_WhenQuerableIsJoinedObject_ShouldWorkAsExpected()
+        internal async Task Query_WhenQuerableIsJoinedObject_ShouldWorkAsExpected()
         {
 
             //arrange
@@ -38,10 +38,10 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             var (count, items) = await joinQuery.Query(filter).GetCountAndListAsync();
 
             //assert
-            count.Should().BeGreaterThan(0);
+            count.ShouldBeGreaterThan(0);
             foreach(var item in items)
             {
-                item.OwnerName.Should().Be("Craig");
+                item.OwnerName.ShouldBe("Craig");
             }
         }
     }

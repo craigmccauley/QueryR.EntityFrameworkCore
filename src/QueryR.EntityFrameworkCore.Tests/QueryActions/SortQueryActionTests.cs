@@ -31,11 +31,11 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             //assert
             if (isAscending)
             {
-                result.Select(item => item.Name).Should().BeInAscendingOrder();
+                result.Select(item => item.Name).ShouldBeInOrder();
             }
             else
             {
-                result.Select(item => item.Name).Should().BeInDescendingOrder();
+                result.Select(item => item.Name).Reverse().ShouldBeInOrder();
             }
         }
     }

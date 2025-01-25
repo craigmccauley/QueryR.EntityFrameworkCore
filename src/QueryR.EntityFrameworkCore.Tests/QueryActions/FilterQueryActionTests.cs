@@ -31,10 +31,11 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             var result = await context.Set<Pet>().Query(querySpec).ToListAsync();
 
             //assert
-            result.Should().NotBeNullOrEmpty();
-            result.Count.Should().Be(2);
-            result[0].Name.Should().Be("Titan");
-            result[1].Name.Should().Be("Meowswers");
+            result.ShouldNotBeNull();
+            result.ShouldNotBeEmpty();
+            result.Count.ShouldBe(2);
+            result[0].Name.ShouldBe("Titan");
+            result[1].Name.ShouldBe("Meowswers");
         }
     }
 }

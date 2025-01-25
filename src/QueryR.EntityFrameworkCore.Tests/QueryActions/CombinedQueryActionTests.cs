@@ -41,14 +41,15 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             var result = context.Set<Pet>().Query(querySpec).PagedQuery;
 
             //assert
-            result.Should().NotBeNullOrEmpty();
+            result.ShouldNotBeNull();
+            result.ShouldNotBeEmpty();
             foreach (var pet in result)
             {
-                pet.Id.Should().Be(default);
-                pet.Name.Should().NotBeNullOrWhiteSpace();
-                pet.Owner.Should().NotBeNull();
-                pet.Owner!.Id.Should().Be(default);
-                pet.Owner!.Name.Should().NotBeNullOrWhiteSpace();
+                pet.Id.ShouldBe(default);
+                pet.Name.ShouldNotBeNullOrWhiteSpace();
+                pet.Owner.ShouldNotBeNull();
+                pet.Owner!.Id.ShouldBe(default);
+                pet.Owner!.Name.ShouldNotBeNullOrWhiteSpace();
             }
         }
 
@@ -85,18 +86,19 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             //assert
             foreach (var person in result!)
             {
-                person.Id.Should().Be(default);
-                person.Name.Should().NotBeNullOrWhiteSpace();
-                person.Age.Should().Be(default);
-                person.Pets.Should().NotBeNullOrEmpty();
+                person.Id.ShouldBe(default);
+                person.Name.ShouldNotBeNullOrWhiteSpace();
+                person.Age.ShouldBe(default);
+                person.Pets.ShouldNotBeNull();
+                person.Pets.ShouldNotBeEmpty();
                 foreach (var pet in person.Pets!)
                 {
-                    pet.Id.Should().Be(default);
-                    pet.PetType.Should().Be(default);
-                    pet.PetTypeId.Should().Be(default);
-                    pet.OwnerId.Should().Be(default);
-                    pet.Owner.Should().Be(default);
-                    pet.Name.Should().NotBeNullOrWhiteSpace();
+                    pet.Id.ShouldBe(default);
+                    pet.PetType.ShouldBe(default);
+                    pet.PetTypeId.ShouldBe(default);
+                    pet.OwnerId.ShouldBe(default);
+                    pet.Owner.ShouldBe(default);
+                    pet.Name.ShouldNotBeNullOrWhiteSpace();
                 }
             }
         }
@@ -137,16 +139,18 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             //assert
             foreach (var person in result)
             {
-                person.Pets.Should().NotBeNullOrEmpty();
+                person.Pets.ShouldNotBeNull();
+                person.Pets.ShouldNotBeEmpty();
                 foreach (var pet in person.Pets!)
                 {
-                    pet.Name.Should().NotBeNullOrWhiteSpace();
-                    pet.Owner.Should().NotBeNull();
-                    pet.Owner!.Pets.Should().NotBeNullOrEmpty();
+                    pet.Name.ShouldNotBeNullOrWhiteSpace();
+                    pet.Owner.ShouldNotBeNull();
+                    pet.Owner!.Pets.ShouldNotBeNull();
+                    pet.Owner!.Pets.ShouldNotBeEmpty();
                     foreach (var ownerPet in pet.Owner.Pets!)
                     {
-                        ownerPet.Name.Should().NotBeNullOrWhiteSpace();
-                        ownerPet.Owner.Should().BeNull();
+                        ownerPet.Name.ShouldNotBeNullOrWhiteSpace();
+                        ownerPet.Owner.ShouldBeNull();
                     }
                 }
             }

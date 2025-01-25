@@ -25,9 +25,9 @@ namespace QueryR.EntityFrameworkCore.Tests.QueryActions
             var (Count, Items) = await context.Set<Person>().Query(querySpec).GetCountAndListAsync();
 
             //assert
-            Count.Should().Be(2);
-            Items.Count.Should().Be(1);
-            Items.First().Name.Should().Be("Craig");
+            Count.ShouldBe(2);
+            Items.Count.ShouldBe(1);
+            Items.First().Name.ShouldBe("Craig");
         }
     }
 }
